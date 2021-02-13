@@ -190,6 +190,15 @@ function UmsatzMetadaten (KategoriePfad, Kommentar)
     KommentarNeu = string.gsub(KommentarNeu, "{" .. Text .. "}%s*", "")
   end
 
+  -- Umsatz-Kommentar nach Konto durchsuchen
+
+  Text = KommentarNeu:match "%[(%d+)%]"
+  if Text then
+    Gegenkonto = Text
+    KommentarNeu = string.gsub(KommentarNeu, "%[" .. Text .. "]%s*", "")
+    KommentarNeu = KommentarNeu:match "^%s*(.-)%s*$"
+  end
+  
   KommentarNeu = string.gsub(KommentarNeu, "%s*$", "")
 
   -- Alle extrahierten Werte zurückliefern
